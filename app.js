@@ -17,6 +17,7 @@ var Comment = require("./models/comment");
 
 
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
 
 /** We use RESTful - CRUD: create read update destroy*/
 
