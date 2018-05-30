@@ -22,7 +22,7 @@
                 <div class="text-right"><a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add new comment</a></div>
                 <hr>
                 <% campground.comments.forEach(function(comment){ %>
-                    <strong><%=comment.author%></strong>
+                    <strong><%=comment.author.username%></strong>
                     <span class="pull-right">10 days ago</span>
                     <p><%= comment.text %></p>
                 <% });%>
