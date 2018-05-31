@@ -17,7 +17,8 @@ var commentRoutes = require("./routes/comments"),
 app.use(bodyParser.urlencoded({extended: true}));//for POST body
 
 //mongoose.connect("mongodb://localhost/YelpCamp"); //create or use db called YelpCamp
-mongoose.connect("mongodb://harry28:harry28@ds117495.mlab.com:17495/rapforum");
+//mongoose.connect("mongodb://harry28:harry28@ds117495.mlab.com:17495/rapforum");
+mongoose.connect(process.env.DATABASEURL);
 
 //localhost is your mongodb address, need to run by mongod
 
