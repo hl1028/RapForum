@@ -2,8 +2,10 @@ var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
+    flash = require("connect-flash"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
+    methodOverride = require("method-override"),
     Comment = require("./models/comment"),  //one dot is same level
     User = require("./models/user");
 
@@ -26,6 +28,8 @@ var seedDB = require("./seeds");
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+app.use(flash());
 
 /** We use RESTful - CRUD: create read update destroy*/
 
@@ -41,9 +45,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//to pass currentUser in every Route
+//pass currentUser into every View Page!
 app.use(function(req, res, next){
    res.locals.currentUser = req.user;
+   res.locals.error = req.flash("error");
+   res.locals.success = req.flash("success");
    next();
 });
 
