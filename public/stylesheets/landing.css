@@ -1,0 +1,84 @@
+body {
+  background-color: #000;
+}
+
+#landing-header {
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  padding-top: 40vh;
+}
+
+#landing-header h1 {
+  color: #fff;
+  padding-bottom: 1em;
+  text-shadow: 2px 2px #000;
+}
+
+.slideshow { 
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.slideshow li { 
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  z-index: 0;
+  animation: imageAnimation 50s linear infinite; 
+}
+
+.slideshow li:nth-child(1) { 
+  background-image: url(http://www.kbtt.fm/wp-content/uploads/2017/12/AP_17346836068317.jpg) 
+}
+.slideshow li:nth-child(2) { 
+  background-image: url(https://images-na.ssl-images-amazon.com/images/I/61fXEwg-lAL._SL1400_.jpg);
+  animation-delay: 10s; 
+}
+.slideshow li:nth-child(3) { 
+  background-image: url(https://i.ytimg.com/vi/ygS_Cwng7IU/maxresdefault.jpg);
+  animation-delay: 20s; 
+}
+.slideshow li:nth-child(4) { 
+  background-image: url(https://i1.wp.com/nousculture.com/wp-content/uploads/2017/02/club_la_vela_spring_break_2016_migos_wide.jpg?fit=1280%2C800);
+  animation-delay: 30s; 
+}
+.slideshow li:nth-child(5) { 
+  background-image: url(https://esaudmccaulley.files.wordpress.com/2017/04/o55vovr.jpg);
+  animation-delay: 40s; 
+}
+
+@keyframes imageAnimation { 
+  0% { 
+    opacity: 0; 
+    animation-timing-function: ease-in;
+  }
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    opacity: 1
+  }
+  30% {
+    opacity: 0
+  }
+}
+
+/* Older browser support - .no-cssanimations class added by modernizr */
+.no-cssanimations .slideshow li {
+	opacity: 1;
+}

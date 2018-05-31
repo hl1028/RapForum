@@ -9,6 +9,7 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
         Camp.findById(req.params.id, function(err, foundCamp){
             if (err){
                 console.log(err);
+                req.flash("error", "Camp not found!");
                 res.redirect("back");
             } else {
                 //does this user own the campground?   ###foundCamp.author.id is an Object
@@ -17,11 +18,13 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
                     next();
                 } else {
                     console.log("no permission");
+                    req.flash("error", "You don't have permission to do that!"); 
                     res.redirect("back");  
                 }
             }
         });
     } else {
+        req.flash("error", "Please Login First!"); 
         res.redirect("back");
     }
 
@@ -33,6 +36,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
         Comment.findById(req.params.comment_id, function(err, foundComment){
             if (err){
                 console.log(err);
+                req.flash("error", "Comment not found!"); 
                 res.redirect("back");
             } else {
                 //does this user own the comment?   ###foundComment.author.id is an Object
@@ -41,11 +45,13 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
                     next();
                 } else {
                     console.log("no permission");
+                    req.flash("error", "You don't have permission to do that!"); 
                     res.redirect("back");  
                 }
             }
         });
     } else {
+        req.flash("error", "Please Login First!"); 
         res.redirect("back");
     }
 

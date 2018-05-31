@@ -5,7 +5,7 @@ var User = require("../models/user");
 
 //root ROUTE
 router.get("/", function(req, res){
-   res.render("index"); 
+   res.render("landing"); 
 });
 
 //********AUTH ROUTES*************/
@@ -15,16 +15,24 @@ router.get("/register", function(req, res){
 
 router.post("/register", function(req, res){
    //passport-local-mongoose package func
-   var newUser = new User({username: req.body.username});
-   User.register(newUser, req.body.password, function(err, user){
-       if (err){
-           return res.render("register");
-       }
-       //login during register
-       passport.authenticate("local")(req, res, function(){
-          res.redirect("/campgrounds"); 
+   if (req.body.password == req.body.retype_password){
+       var newUser = new User({username: req.body.username});
+       User.register(newUser, req.body.password, function(err, user){
+           if (err){
+               req.flash("error", err.message);
+               return res.redirect("/register");
+           }
+           //login during register
+           passport.authenticate("local")(req, res, function(){
+              req.flash("success", "Welcome! " + req.body.username);
+              res.redirect("/campgrounds"); 
+           });
        });
-   });
+   } else {
+       req.flash("error", "2 inputs of password are different");
+       return res.redirect("/register");
+   }
+   
 });
 
 router.get("/login", function(req, res) {
@@ -44,13 +52,5 @@ router.get("/logout", function(req, res) {
     req.flash("success", "Logged you out!");
     res.redirect("/campgrounds");
 });
-
-//middleware
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 module.exports = router;

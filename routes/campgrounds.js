@@ -21,19 +21,21 @@ router.get("/campgrounds", function(req, res){
 router.post("/campgrounds", middleware.isLoggedIn, function(req, res){        //in REST it should be same
     //get data from form and add to array
     var name = req.body.name;
+    var price = req.body.price;
     var image = req.body.image;
     var description = req.body.description;
     var author = {      //ADD USER info
         id: req.user._id,
         username: req.user.username
     };
-    var newCampground = {name: name, image: image, description: description, author: author};
+    var newCampground = {name: name, price: price, image: image, description: description, author: author};
     
     Camp.create(newCampground, function(err, newOne){
         if(err){
            console.log(err);
        } else {
            console.log(newOne);
+           req.flash("success", "New Album Created!");
            res.redirect("/campgrounds");
        }
     });
@@ -72,6 +74,7 @@ router.put("/campgrounds/:id", middleware.checkCampgroundOwnership, function(req
         if (err){
             res.redirect("/campgrounds");
         } else {
+            req.flash("success", "Album Updated!");
             res.redirect("/campgrounds/" + req.params.id);
         }
     });
@@ -83,14 +86,10 @@ router.delete("/campgrounds/:id", middleware.checkCampgroundOwnership, function(
        if(err){
            res.redirect("/campgrounds");
        } else {
+           req.flash("success", "Album Deleted!");
            res.redirect("/campgrounds");
        }
    })
 });
-
-//middleware
-
-
-
 
 module.exports = router;

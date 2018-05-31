@@ -36,6 +36,7 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req, re
                   
                   campground.comments.push(currcomment);
                   campground.save();
+                  req.flash("success", "Added Freestyle")
                   res.redirect('/campgrounds/' + campground._id);
                 }
                 
@@ -61,6 +62,7 @@ router.put("/campgrounds/:id/comments/:comment_id", middleware.checkCommentOwner
         if (err){
             res.redirect("back");
         } else {
+            req.flash("success", "Freestyle Edited"); 
             res.redirect("/campgrounds/" + req.params.id);
         }
      });
@@ -73,6 +75,7 @@ router.delete("/campgrounds/:id/comments/:comment_id", middleware.checkCommentOw
        if(err){
            res.redirect("back");
        } else {
+           req.flash("success", "Freestyle Deleted");
            res.redirect("/campgrounds/" + req.params.id);
        }
    })
